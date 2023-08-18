@@ -1,16 +1,13 @@
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
 import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
   View,
   Image,
-  useWindowDimensions,
-  Platform,
+  // useWindowDimensions,
+  // Platform,
 } from "react-native";
+
 import {
   AppBar,
   Button,
@@ -49,8 +46,8 @@ const darkTheme = createTheme({
 const styles = StyleSheet.create({
   view: {
     flexDirection: "column",
-    height: window.innerHeight,
-    width: window.innerWidth,
+    height: "100%",
+    width: "100%",
     flex: 1,
   },
   searchBar: {
@@ -87,7 +84,6 @@ function renderMovie({
         source={{ uri: item.Poster }}
         style={styles.cardMedia}
         resizeMode="contain"
-
       />
       <CardContent>
         <Typography variant="subtitle1" noWrap>
@@ -153,6 +149,8 @@ export default function App() {
       if (isLoadingSubscription) isLoadingSubscription.unsubscribe();
     };
   }, []);
+
+
 
   return (
     <View style={styles.view}>

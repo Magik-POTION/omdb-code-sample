@@ -1,6 +1,7 @@
 import axios, { Axios, AxiosRequestConfig } from "axios";
 import OMDBDataReturnTypes from "../enums/OMDBDataReturnTypes";
 import OMDBTypes from "../enums/OMDBTypes";
+import OMDBMmovieResponse from "../interfaces/OMDBMovieResponse";
 import OMDBResponse from "../interfaces/OMDBResponse";
 
 class OMDB {
@@ -61,6 +62,45 @@ class OMDB {
 
     const response = await this.dataAxios.get<OMDBResponse>("", config);
     const data: OMDBResponse = response.data;
+
+    if (data.Response === "True") {
+      return data;
+    } else {
+      throw new Error(data.Error);
+    }
+  }
+
+  /**
+   * Gets a single movie
+   * @param params object containing url parameters.
+   *
+   * s: Search parameter
+   * y: year of movie
+   * r: return data type
+   * page: page of result
+   * callback: JSONP callback name
+   * v: api version
+   */
+  async getMovieByID(
+    i: string,
+    params?: {
+      y?: number;
+      plot?: string;
+      r?: OMDBDataReturnTypes;
+      callback?: string;
+      v?: number;
+    }
+  ) {
+    let config: AxiosRequestConfig = {
+      params: {
+        i: i,
+        type: OMDBTypes.movie,
+        ...params,
+      },
+    };
+
+    const response = await this.dataAxios.get<OMDBMmovieResponse>("", config);
+    const data: OMDBMmovieResponse = response.data;
 
     if (data.Response === "True") {
       return data;
